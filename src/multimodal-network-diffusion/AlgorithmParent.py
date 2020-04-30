@@ -10,11 +10,13 @@ from copy import deepcopy
 import numpy as np
 import os
 import sys
+'''
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 PROJECT_DIR = os.getenv("PROJECT_DIR")
 sys.path.append(PROJECT_DIR+'/src')
 import paths
+'''
 
 class AlgorithmParent(object):
     '''
@@ -55,11 +57,11 @@ class AlgorithmParent(object):
         '''
         Store the location to save algorithm results
         '''
-        self.resultDir = paths.ALGORITHM_RESULT_TMP_DIR
+        self.resultDir = '../resultAlgorithm/'
         '''
         Store the location to save processed networks
         '''
-        self.networkDir = paths.NETWORK_TMP_DIR
+        self.networkDir = '../network/'
         kwargs = {k: v for k, v in kwargs.items() if v is not None}
         self.__dict__.update(kwargs)
         if not os.path.exists(self.resultDir):
@@ -317,7 +319,7 @@ class AlgorithmParent(object):
         if(fileName is None):
             fileName = self.saveFile
         loadedFiles = np.load(fileName + '.npz')
-        print 'Loading pre-existing saved results ' + fileName
+        print ('Loading pre-existing saved results ' + fileName)
         if('mat' in loadedFiles):
             mat = loadedFiles['mat']
         else:
