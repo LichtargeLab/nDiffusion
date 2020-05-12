@@ -1,5 +1,5 @@
 
-def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2=[], R_gp2o_gp1=[], R_gp1o_gp2o=[], R_gp2o_gp1o=[], R_gp1o_overlap=[], R_gp2o_overlap=[], R_overlap_exclusives=[]):
+def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2=[], R_gp2o_gp1=[], R_gp1o_gp2o=[], R_gp2o_gp1o=[], R_gp1o_overlap=[], R_gp2o_overlap=[], R_overlap_exclusives=[], R_gp1_gp2=[], R_gp2_gp1=[]):
           #### KS test results
           ks_result = []
           ks_result.append(['Diffusion FROM','Diffusion TO','Randomize (Diffusion FROM) (degree-matched)','Randomize (Diffusion TO) (degree-matched)','Randomize (Diffusion FROM)  (uniform)','Randomize (Diffusion TO) (uniform)'])
@@ -11,6 +11,9 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
                     ks_result.append([group1_name+' Exclusive', 'Overlap', R_gp1o_overlap[4][0], R_gp1o_overlap[4][1], R_gp1o_overlap[4][2], R_gp1o_overlap[4][3]])
                     ks_result.append([group2_name+' Exclusive', 'Overlap', R_gp2o_overlap[4][0], R_gp2o_overlap[4][1], R_gp2o_overlap[4][2], R_gp2o_overlap[4][3]])
                     ks_result.append(['Overlap', 'Exclusives', R_overlap_exclusives[4][0], R_overlap_exclusives[4][1], R_overlap_exclusives[4][2], R_overlap_exclusives[4][3]])
+                    ks_result.append([group1_name, group1_name, R_gp1_gp2[4][0], R_gp1_gp2[4][1], R_gp1_gp2[4][2], R_gp1_gp2[4][3]])
+                    ks_result.append([group2_name, group1_name, R_gp2_gp1[4][0], R_gp2_gp1[4][1], R_gp2_gp1[4][2], R_gp2_gp1[4][3]])
+                                        
           else:
                     ks_result.append([group1_name, group2_name, R_gp1o_gp2o[4][0], R_gp1o_gp2o[4][1], R_gp1o_gp2o[4][2], R_gp1o_gp2o[4][3]])
                     ks_result.append([group2_name, group1_name, R_gp2o_gp1o[4][0], R_gp2o_gp1o[4][1], R_gp2o_gp1o[4][2], R_gp2o_gp1o[4][3]]) 
@@ -26,6 +29,8 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
                     roc_result.append([group1_name+' Exclusive', 'Overlap', R_gp1o_overlap[0], R_gp1o_overlap[1][0], R_gp1o_overlap[1][1], R_gp1o_overlap[1][2], R_gp1o_overlap[1][3]])
                     roc_result.append([group2_name+' Exclusive', 'Overlap', R_gp2o_overlap[0], R_gp2o_overlap[1][0], R_gp2o_overlap[1][1], R_gp2o_overlap[1][2], R_gp2o_overlap[1][3]])
                     roc_result.append(['Overlap', 'Exclusives', R_overlap_exclusives[0], R_overlap_exclusives[1][0], R_overlap_exclusives[1][1], R_overlap_exclusives[1][2], R_overlap_exclusives[1][3]])
+                    roc_result.append([group1_name, group2_name, R_gp1_gp2[0], R_gp1_gp2[1][0], R_gp1_gp2[1][1], R_gp1_gp2[1][2], R_gp1_gp2[1][3]])
+                    roc_result.append([group2_name, group1_name, R_gp2_gp1[0], R_gp2_gp1[1][0], R_gp2_gp1[1][1], R_gp2_gp1[1][2], R_gp2_gp1[1][3]])
           else:
                     roc_result.append([group1_name, group2_name, R_gp1o_gp2o[0], R_gp1o_gp2o[1][0], R_gp1o_gp2o[1][1], R_gp1o_gp2o[1][2], R_gp1o_gp2o[1][3]])
                     roc_result.append([group2_name, group1_name, R_gp2o_gp1o[0], R_gp2o_gp1o[1][0], R_gp2o_gp1o[1][1], R_gp2o_gp1o[1][2], R_gp2o_gp1o[1][3]]) 
@@ -41,6 +46,8 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
                     prc_result.append([group1_name+' Exclusive', 'Overlap', R_gp1o_overlap[2], R_gp1o_overlap[3][0], R_gp1o_overlap[3][1], R_gp1o_overlap[3][2], R_gp1o_overlap[3][3]])
                     prc_result.append([group2_name+' Exclusive', 'Overlap', R_gp2o_overlap[2], R_gp2o_overlap[3][0], R_gp2o_overlap[3][1], R_gp2o_overlap[3][2], R_gp2o_overlap[3][3]])
                     prc_result.append(['Overlap', 'Exclusives', R_overlap_exclusives[2], R_overlap_exclusives[3][0], R_overlap_exclusives[3][1], R_overlap_exclusives[3][2], R_overlap_exclusives[3][3]])
+                    prc_result.append([group1_name, group2_name, R_gp1_gp2[2], R_gp1_gp2[3][0], R_gp1_gp2[3][1], R_gp1_gp2[3][2], R_gp1o_gp2[3][3]])
+                    prc_result.append([group2_name, group1_name, R_gp2_gp1[2], R_gp2_gp1[3][0], R_gp2_gp1[3][1], R_gp2_gp1[3][2], R_gp2o_gp1[3][3]])  
           else:
                     prc_result.append([group1_name, group2_name, R_gp1o_gp2o[2], R_gp1o_gp2o[3][0], R_gp1o_gp2o[3][1], R_gp1o_gp2o[3][2], R_gp1o_gp2o[3][3]])
                     prc_result.append([group2_name, group1_name, R_gp2o_gp1o[2], R_gp2o_gp1o[3][0], R_gp2o_gp1o[3][1], R_gp2o_gp1o[3][2], R_gp2o_gp1o[3][3]]) 

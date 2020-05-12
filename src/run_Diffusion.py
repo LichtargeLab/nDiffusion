@@ -61,15 +61,15 @@ if __name__ == "__main__":
         R_gp2o_overlap = getResults(GP2_only_dict, overlap_dict, result_fl, group2_name+'Excl', 'Overlap')
         # From overlap to (group 1 exclusive and group 2 exlusive)
         R_overlap_exclusives = getResults(overlap_dict, Exclusives_dict, result_fl,'Overlap', 'Exclus')
-        '''
+    
         #### NOT Recommended: When including overlap in both groups. We will for sure recover the true positive in the overlap, hence inflating the performances ####
         # From group 1 all to group 2 all
         R_gp1_gp2 = getResults(GP1_all_dict, GP2_all_dict, result_fl, group1_name, group2_name, exclude = GP1_only_dict['index'])
         # From group 2 all to group 1 all
         R_gp2_gp1 = getResults(GP2_all_dict, GP1_all_dict, result_fl, group2_name, group1_name, exclude = GP2_only_dict['index'])
-        '''
+    
         ### Write output
-        writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2, R_gp2o_gp1, R_gp1o_gp2o, R_gp2o_gp1o, R_gp1o_overlap, R_gp2o_overlap, R_overlap_exclusives)
+        writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2, R_gp2o_gp1, R_gp1o_gp2o, R_gp2o_gp1o, R_gp1o_overlap, R_gp2o_overlap, R_overlap_exclusives, R_gp1_gp2, R_gp2_gp1)
     else: #when there is no overlap between two groups
         # From group 1 to group 2:
         R_gp1o_gp2o = getResults(GP1_only_dict, GP2_only_dict, result_fl, group1_name, group2_name, show = '__SHOW_1_')
