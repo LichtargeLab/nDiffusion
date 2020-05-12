@@ -1,4 +1,4 @@
-Network Diffusion (nDiffusion) for Validating Gene Connectedness
+# Network Diffusion (nDiffusion) for Validating Gene Connectedness
 
 Repository for [*nDiffusion*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039).   - (will be changed later)
 If you have any questions or comments, feel free to contact Minh Pham (minh[dot]pham[at]bcm[dot]edu) or Olivier Lichtarge (lichtarge[at]bcm[dot]edu).
@@ -8,9 +8,6 @@ If you have any questions or comments, feel free to contact Minh Pham (minh[dot]
  - [Download code](#download-code)
  - [Installation and download network data](#installation-and-download-network-data)
  - [Run tutorial](#run-tutorial)
- - [Run experiments](#run-experiments)
- - [Project organization](#project-organization)
- - [Links to download data](#links-to-download-data)
 
 --------
 ## Download code   - (will be changed later)
