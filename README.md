@@ -1,4 +1,4 @@
-# Network Diffusion (nDiffusion) for Validating Gene Connectedness
+# Network Diffusion (nDiffusion) to Validate Gene Connectedness
 
 Repository for [*nDiffusion*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039).   - (will be changed later)
 
