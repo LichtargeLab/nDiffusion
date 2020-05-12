@@ -23,7 +23,7 @@ git clone https://github.com/mpham93/nDiffusion.git
 - Requirement: python=3.5.2
 ```bash
 conda create -n nDiffusion python=3.5.2
-conda activate nDiffusion
+source activate nDiffusion
 pip install -r requirements.txt
 ```
 --------
