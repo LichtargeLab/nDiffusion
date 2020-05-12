@@ -6,9 +6,9 @@ from IPython import embed
 import sys, os
 
 ### CHANGE HERE: Assigning network, gene inputs, and result directory ###
-network_fl = '../data/networks/STRINGv10.txt'
-geneList1_fl = '../data/genes/gs_genes.tsv'
-geneList2_fl = '../data/genes/Replicate_Final_SigGenes_list.tsv'
+network_fl = '../data/networks/toy_network.txt'
+geneList1_fl = '../data/genes/A_test.tsv'
+geneList2_fl = '../data/genes/B_test.tsv'
 result_fl = '../results/'
 group1_name = geneList1_fl.split('/')[-1].split('.')[0]
 group2_name = geneList2_fl.split('/')[-1].split('.')[0]

@@ -1,7 +1,8 @@
 # Network Diffusion (nDiffusion) for Validating Gene Connectedness
 
 Repository for [*nDiffusion*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039).   - (will be changed later)
-If you have any questions or comments, feel free to contact Minh Pham (minh[dot]pham[at]bcm[dot]edu) or Olivier Lichtarge (lichtarge[at]bcm[dot]edu).
+
+If you have any questions or comments, feel free to contact Minh Pham (minh.pham@bcm.edu) or Olivier Lichtarge (lichtarge@bcm.edu).
 
 --------
 ## Content
@@ -33,7 +34,7 @@ pip install -r requirements.txt
 source activate nDiffusion
 ```
 ### 2. Open src/run_Diffusion.py and edit the appropriate variables in the CHANGE HERE section. For the tutorial, keep the default
-#### (1) A network file: network_fl. Format: Entity1\tEntity2\tEdge_weight. Default: STRINGv10.0 network
+#### (1) A network file: network_fl. Format: Entity1\tEntity2\tEdge_weight. Default: toy_network.txt
 #### (2) Input gene lists: geneList1_fl and geneList2_fl. Format: a column of gene names
 #### (3) A result folder: result_fl. Default: '../results/'
 
