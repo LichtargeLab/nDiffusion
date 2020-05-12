@@ -1,5 +1,4 @@
 Network Diffusion (nDiffusion) for Validating Gene Connectedness
-==================================================================
 
 Repository for [*nDiffusion*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039).   - (will be changed later)
 If you have any questions or comments, feel free to contact Minh Pham (minh[dot]pham[at]bcm[dot]edu) or Olivier Lichtarge (lichtarge[at]bcm[dot]edu).
@@ -47,3 +46,5 @@ cd src/
 python run_Diffusion.py
 ```
 ### 4. Check for the outputs in the result folder
+=======
+
