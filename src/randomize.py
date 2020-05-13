@@ -47,8 +47,10 @@ def getRand_degree(pred_degree_count, degree_nodes, iteration=1):
         cnt = 0
         if float(i) <= 100:
             increment = 1
-        else:
+        elif float(i) <= 500:
             increment = 5
+        else:
+            increment = 10
         while len(lst) < count and modifier <= float(i)/10 and cnt <= 500:
             degree_select = [n for n in degree_nodes.keys() if n <= i+modifier and n >= i-modifier]
             node_select = []
@@ -62,9 +64,9 @@ def getRand_degree(pred_degree_count, degree_nodes, iteration=1):
                 pass
             modifier += increment
             cnt += 1
-        overlap = set(rand_node).intersection(lst)
-        for item in overlap:
-            lst.remove(item)
+            overlap = set(rand_node).intersection(lst)
+            for item in overlap:
+                lst.remove(item)
         rand_node += lst
         rand_degree[i] += lst
     return rand_node
@@ -72,8 +74,6 @@ def getRand_degree(pred_degree_count, degree_nodes, iteration=1):
 ### Selecting random genes uniformly
 def getRand_uniform(pred_degree_count, other):
     number_rand = sum(pred_degree_count.values())
-    #random.shuffle(other)
-    #rand_node = other[:number_rand]
     rand_node = random.sample(other, number_rand)
     return rand_node
 
