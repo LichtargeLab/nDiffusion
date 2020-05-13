@@ -117,19 +117,3 @@ def mergeDegreeDict (dict1, dict2):
         except:
             merge_dict[k] = dict2[k]
     return merge_dict
-    
-'''
-### roughly time for each step:
-G: 49.306450843811035 seconds
-graph_node: 0.0009710788726806641 seconds
-adjMatrix: 26.21620202064514 seconds
-node_degree: 0.016659975051879883 seconds
-G_degree: 3.0994415283203125e-06 seconds
-L 0.3128049373626709 seconds
-n 5.0067901611328125e-06 seconds
-I 0.0002460479736328125 seconds
-axisSum 1.215691089630127 seconds
-sumMax 0.00013208389282226562 seconds
-diffusionParameter 5.0067901611328125e-06 seconds
-ps 0.3286440372467041 seconds
-'''
