@@ -62,11 +62,11 @@ def getRand_degree(pred_degree_count, degree_nodes, iteration=1):
                 pass
             modifier += increment
             cnt += 1
-            overlap = set(rand_node).intersection(lst)
-            for item in overlap:
-                lst.remove(item)
-            rand_node += lst
-            rand_degree[i] += lst
+        overlap = set(rand_node).intersection(lst)
+        for item in overlap:
+            lst.remove(item)
+        rand_node += lst
+        rand_degree[i] += lst
     return rand_node
 
 ### Selecting random genes uniformly
