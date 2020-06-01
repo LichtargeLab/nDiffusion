@@ -1,8 +1,7 @@
-
 def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2=[], R_gp2o_gp1=[], R_gp1o_gp2o=[], R_gp2o_gp1o=[], R_gp1o_overlap=[], R_gp2o_overlap=[], R_overlap_exclusives=[], R_gp1_gp2=[], R_gp2_gp1=[]):
           #### KS test results
           ks_result = []
-          ks_result.append(['Diffusion FROM','Diffusion TO','Randomize (Diffusion FROM) (degree-matched)','Randomize (Diffusion TO) (degree-matched)','Randomize (Diffusion FROM)  (uniform)','Randomize (Diffusion TO) (uniform)'])
+          ks_result.append(['Seeds','Recipients','Randomize Seeds (degree-matched)','Randomize Recipients (degree-matched)','Randomize Seeds (uniform)','Randomize Recipients (uniform)'])
           if overlap_dict['node'] != []:
                     ks_result.append([group1_name+' Exclusive', group2_name, R_gp1o_gp2[4][0], R_gp1o_gp2[4][1], R_gp1o_gp2[4][2], R_gp1o_gp2[4][3]])
                     ks_result.append([group2_name+' Exclusive', group1_name, R_gp2o_gp1[4][0], R_gp2o_gp1[4][1], R_gp2o_gp1[4][2], R_gp2o_gp1[4][3]])
@@ -20,7 +19,7 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
 
           ### ROC results
           roc_result=[]
-          roc_result.append(['Diffusion FROM','Diffusion TO','AUROC','Zf (degree-matched)','Zt (degree-matched)','Zf (uniform)','Zt (uniform)'])
+          roc_result.append(['Seeds','Recipients','AUROC','Z-score for Random Seeds (degree-matched)','Z-score for Random Recipients (degree-matched)','Z-score for Random Seeds (uniform)','Z-score for Random Recipients (uniform)'])
           if overlap_dict['node'] != []:
                     roc_result.append([group1_name+' Exclusive', group2_name, R_gp1o_gp2[0], R_gp1o_gp2[1][0], R_gp1o_gp2[1][1], R_gp1o_gp2[1][2], R_gp1o_gp2[1][3]])
                     roc_result.append([group2_name+' Exclusive', group1_name, R_gp2o_gp1[0], R_gp2o_gp1[1][0], R_gp2o_gp1[1][1], R_gp2o_gp1[1][2], R_gp2o_gp1[1][3]])
@@ -37,7 +36,7 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
 
           ### PRC results
           prc_result=[]
-          prc_result.append(['Diffusion FROM','Diffusion TO','AUPRC','Zf (degree-matched)','Zt (degree-matched)','Zf (uniform)','Zt (uniform)'])
+          prc_result.append(['Seeds','Recipients','AUPRC','Z-score for Random Seeds (degree-matched)','Z-score for Random Recipients (degree-matched)','Z-score for Random Seeds (uniform)','Z-score for Random Recipients (uniform)'])
           if overlap_dict['node'] != []:
                     prc_result.append([group1_name+' Exclusive', group2_name, R_gp1o_gp2[2], R_gp1o_gp2[3][0], R_gp1o_gp2[3][1], R_gp1o_gp2[3][2], R_gp1o_gp2[3][3]])
                     prc_result.append([group2_name+' Exclusive', group1_name, R_gp2o_gp1[2], R_gp2o_gp1[3][0], R_gp2o_gp1[3][1], R_gp2o_gp1[3][2], R_gp2o_gp1[3][3]])
@@ -90,7 +89,7 @@ def writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_di
                     file_hand.writelines("%s\n" % val) 
           file_hand.write('\n')         
           file_hand.write('Z-scores are computed for the experimental area under ROC or PRC based on distributions of the random areas under these curves\n')
-          file_hand.write('Zf : when randomizing source genes (Diffusion FROM)\nZt : when randomizing recipient genes (Diffusion TO)\n')
+          file_hand.write('Seeds: Genes where diffusion signal starts FROM)\nRecipients: Genes that receive the diffusion signal and that are in the other validated group\n')
           file_hand.write('Random genes are selected either uniformly or degree matched\n')
           file_hand.write('\n')
           file_hand.write('\n')

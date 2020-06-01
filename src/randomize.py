@@ -19,16 +19,17 @@ def performance_run (from_index, to_index, graph_node, ps, exclude = [], diffuse
             diffuseMatrix = diffuse(label, ps)
     except:
         pass
-    score, classify, scoreTP = [], [], []
+    score, classify, scoreTP, gene_write = [], [], [], []
     for i in range(len(graph_node)):
         if i not in exclude:
+            gene_write.append(graph_node[i])
             score.append(diffuseMatrix[i])
             if i in to_index:
                 classify.append(1)
                 scoreTP.append(diffuseMatrix[i])
             else:
                 classify.append(0)
-    results['classify'], results['score'], results['scoreTP'] = classify, score, scoreTP
+    results['classify'], results['score'], results['scoreTP'], results['genes'] = classify, score, scoreTP, gene_write
     results['diffuseMatrix'] = diffuseMatrix
     results['fpr'], results['tpr'], thresholds = roc_curve(classify, score, pos_label=1)
     results['auROC']= auc(results['fpr'], results['tpr'])
@@ -78,7 +79,7 @@ def getRand_uniform(pred_degree_count, other):
     return rand_node
 
 ### Performing degree-matched randomization
-def runRand(node_degree_count, node_index, degree_nodes, other, graph_node_index, ps, rand_type, node_type, diffuseMatrix=False, repeat=100):
+def runRand(node_degree_count, node_index, degree_nodes, other, graph_node_index, graph_node, ps, rand_type, node_type, diffuseMatrix=False, repeat=100):
     AUROCs, AUPRCs, scoreTPs = [], [], []
     if rand_type == 'uniform':
         getRand = getRand_uniform
@@ -90,9 +91,9 @@ def runRand(node_degree_count, node_index, degree_nodes, other, graph_node_index
         rand_node = getRand(node_degree_count, var2)
         rand_index = getIndex(rand_node, graph_node_index)
         if node_type == 'TO':
-            results = performance_run(node_index, rand_index, graph_node_index, ps, diffuseMatrix=diffuseMatrix)
+            results = performance_run(node_index, rand_index, graph_node, ps, diffuseMatrix=diffuseMatrix)
         elif node_type == 'FROM':
-            results = performance_run(rand_index, node_index, graph_node_index, ps)
+            results = performance_run(rand_index, node_index, graph_node, ps)
         AUROCs.append(results['auROC'])
         AUPRCs.append(results['auPRC'])
         scoreTPs += results['scoreTP']
