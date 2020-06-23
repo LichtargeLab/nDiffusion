@@ -11,10 +11,10 @@ def plot_performance(x_axis, y_axis, auc_, result_fl, name, type='ROC', plotting
     if type == 'ROC':
           x_axis_name, y_axis_name = 'FPR', 'TPR'
     elif type == 'PRC':
-          x_axis_name, y_axis_name = 'Recall', 'Precision'  
-    header = '%20s\t%30s'%(y_axis_name,x_axis_name)
-    np.savetxt(result_fl+'raw_data/'+name+type, np.column_stack((y_axis,x_axis)), delimiter ='\t',  header = header, comments='')
-    if plotting == True:
+          x_axis_name, y_axis_name = 'Recall', 'Precision' 
+    if plotting == True: 
+          header = '%20s\t%30s'%(y_axis_name,x_axis_name)
+          np.savetxt(result_fl+'raw_data/'+name+type, np.column_stack((y_axis,x_axis)), delimiter ='\t',  header = header, comments='')
           plt.figure()
           lw = 2
           plt.plot(x_axis, y_axis, color='darkorange', lw=lw, label='AU'+type+' = %0.2f' % auc_)
@@ -27,11 +27,11 @@ def plot_performance(x_axis, y_axis, auc_, result_fl, name, type='ROC', plotting
           plt.xticks(fontsize='large')
           plt.yticks(fontsize='large')
           plt.tight_layout()
-          plt.savefig('{}'.format(result_fl+'figures/'+name+'_'+type))
+          plt.savefig('{}'.format(result_fl+'figures/'+ name+' '+type))
           plt.close()
 
 ### Plotting distribution of random AUCs
-def plotAUCrand (roc_exp, roc_rands, z_text, name, type = 'density'):
+def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', raw_input = True):
     if type == 'density':
           sns.kdeplot(np.array(roc_rands) , color="gray", shade = True)
           plt.legend(loc = 'upper left')
@@ -50,22 +50,30 @@ def plotAUCrand (roc_exp, roc_rands, z_text, name, type = 'density'):
           plt.xticks(fontsize='large')
           plt.yticks(fontsize='large')
     plt.tight_layout()
-    plt.savefig(name)
+    plt.savefig(result_fl+'figures/'+name)
     plt.close()
+    if raw_input == True:
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name), "wb"), np.array(roc_rands))
 
 ### Plotting distribution of experimental and random diffusion values
-def plotDist (exp_dist, randFRd, randTOd, randFRu, randTOu, name, from_gp_name, to_gp_name):
+def plotDist (exp_dist, randFRd, randTOd, randFRu, randTOu, result_fl, name, from_gp_name, to_gp_name, raw_input = True):
     sns.kdeplot(np.log10(exp_dist) , color="red", label="Experiment", shade = True)
     sns.kdeplot(np.log10(randFRd) , color="darkgreen", label="Randomize "+from_gp_name+" (degree-matched)", shade= True)
     sns.kdeplot(np.log10(randTOd) , color="darkblue", label="Randomize "+to_gp_name+" (degree-matched)", shade = True)
     sns.kdeplot(np.log10(randFRu) , color="lightgreen", label="Randomize "+from_gp_name+" (uniform)", shade= True)
     sns.kdeplot(np.log10(randTOu) , color="lightskyblue", label="Randomize "+to_gp_name+" (uniform)", shade = True)
-    plt.legend(loc = 'upper left')
+    plt.legend(loc = "upper left")
     plt.xlabel("log10 (diffusion value)")
     plt.ylabel("Density")
-    plt.savefig(name)
+    plt.savefig(result_fl+"figures/"+name)
     plt.close()
-
+    if raw_input == True:
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Experiment"), "wb"), np.log10(exp_dist))
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (degree-matched)"), "wb"), np.log10(randFRd))
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (degree-matched)"), "wb"), np.log10(randTOd))
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (uniform)"), "wb"), np.log10(randFRu))
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (uniform)"), "wb"), np.log10(randTOu))
+        
 ### Computing z-scores of experimental AUC against random AUCs
 def z_scores(exp, randf_degree, randt_degree, randf_uniform, randt_uniform):
     zf_degree = '%0.2f' %((exp-np.mean(randf_degree))/np.std(randf_degree))
@@ -97,8 +105,8 @@ def runrun(from_dict, to_dict, result_fl, group1_name, group2_name, show, degree
     name = 'from {} to {}'.format(group1_name, group2_name)
     ### experimental results  
     results = performance_run(from_dict['index'], to_dict['index'], graph_node, ps, exclude = exclude)
-    plot_performance(results['fpr'], results['tpr'], results['auROC'], result_fl, '{}{}'.format(name, show), type = 'ROC')
-    plot_performance(results['recall'], results['precision'],results['auPRC'], result_fl, '{}{}'.format(name, show), type = 'PRC')
+    plot_performance(results['fpr'], results['tpr'], results['auROC'], result_fl, '{} {}'.format(show, name), type = 'ROC')
+    plot_performance(results['recall'], results['precision'],results['auPRC'], result_fl, '{} {}'.format(show, name), type = 'PRC', plotting=False)
     writeRanking(results['genes'], results['score'], results['classify'], result_fl, group1_name, group2_name)
     
     ### Degree-matched randomization
@@ -123,8 +131,7 @@ def runrun(from_dict, to_dict, result_fl, group1_name, group2_name, show, degree
     pval = distStats(results['scoreTP'], scoreTPs_from_degree, scoreTPs_to_degree, scoreTPs_from_uniform, scoreTPs_to_uniform)
     
     if show != '':
-        showx = '_'.join(show.split('_')[:-1])
-        plotAUCrand(results['auROC'], AUROCs_to_degree, z_auc[1], result_fl+'figures/'+name + showx+'1_Zt_degree-matched_')
-        plotAUCrand(results['auROC'], AUROCs_from_degree, z_auc[0], result_fl+'figures/'+name + showx+'2_Zf_degree-matched_')
-        plotDist (results['scoreTP'], scoreTPs_from_degree, scoreTPs_to_degree, scoreTPs_from_uniform, scoreTPs_to_uniform, result_fl+'figures/'+name + showx+'3_DiffValDist_', group1_name, group2_name)
+        plotAUCrand(results['auROC'], AUROCs_to_degree, z_auc[1], result_fl, show+'_1 randomize ' + group2_name + ': diffusion ' + name)
+        plotAUCrand(results['auROC'], AUROCs_from_degree, z_auc[0], result_fl, show+'_2 randomize' + group1_name + ': diffusion ' + name)
+        plotDist (results['scoreTP'], scoreTPs_from_degree, scoreTPs_to_degree, scoreTPs_from_uniform, scoreTPs_to_uniform, result_fl, show +'_3 Diffusion value distribution: ' + name, group1_name, group2_name)
     return '%0.2f' %results['auROC'], z_auc, '%0.2f' %results['auPRC'], z_prc, pval
