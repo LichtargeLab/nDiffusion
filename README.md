@@ -1,6 +1,7 @@
 # Network Diffusion (nDiffusion) to Validate Gene Connectedness
 
-Repository for [*nDiffusion*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039).   - (will be changed later)
+Repository for [*nDiffusion*](https://http://ndiffusion.lichtargelab.org)
+Publication: [*Pham M, Lichtarge O. Graph-based information diffusion method for prioritizing functionally related genes in protein-protein interaction networks. Pac Symp Biocomput. 2020;25:439-450.*] (https://www.worldscientific.com/doi/10.1142/9789811215636_0039)
 
 If you have any questions or comments, feel free to contact Minh Pham (minh.pham@bcm.edu) or Olivier Lichtarge (lichtarge@bcm.edu).
 
