@@ -13,6 +13,15 @@ result_fl = '../results/'
 group1_name = geneList1_fl.split('/')[-1].split('.')[0]
 group2_name = geneList2_fl.split('/')[-1].split('.')[0]
 
+### For a multimodal network, specify graph genes
+graph_gene = []
+if network_fl == '../data/networks/MeTeOR.txt':
+    for line in open(network_fl).readlines():
+        line = line.strip('\n').split('\t')
+        for i in line[:2]:
+            if ':' not in i:
+                graph_gene.append(i)
+
 if __name__ == "__main__":
     ### Directory of the result folder
     result_fl_figure = result_fl + 'figures/'
@@ -32,7 +41,7 @@ if __name__ == "__main__":
     G, graph_node, adjMatrix, node_degree, G_degree = getGraph(network_fl)
     ps = getDiffusionParam(adjMatrix)
     graph_node_index = getIndexdict(graph_node)
-    GP1_only_dict, GP2_only_dict, overlap_dict, other_dict = parseGeneInput(geneList1_fl, geneList2_fl, graph_node, graph_node_index, node_degree)
+    GP1_only_dict, GP2_only_dict, overlap_dict, other_dict = parseGeneInput(geneList1_fl, geneList2_fl, graph_node, graph_node_index, node_degree, graph_gene)
     degree_nodes = getDegreeNode(G_degree, node_degree, other_dict['node'])
 
     # Combine exclusive genes and overlapped genes in each group, if there is an overlap

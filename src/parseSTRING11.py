@@ -1,7 +1,8 @@
 from IPython import embed
 
-def getSTRINGv10(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRING10/', outfile = '../data/networks/STRINGv10.txt'):
+def getSTRINGv11(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRING10/', outfile = '../data/networks/STRINGv11.txt'):
           out = open(outfile, 'w')
+          
           string_entrez = {}
           def entrezString(fl):
                     for line in open(fl).readlines():
@@ -10,6 +11,14 @@ def getSTRINGv10(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
                                         string_entrez[line[1].replace('9606.','')] = line[0]
           entrezString(network_path+'entrez_gene_id.vs.string.v10.28042015.tsv')
           entrezString(network_path+'entrez_gene_id.vs.string.v9.05.28122012.txt')
+          
+          def human_entrez_string (fl = network_path + 'human.entrez_2_string.2018.tsv'):
+                    for line in open(fl).readlines():
+                              if '#' not in line:
+                                        line = line.strip('\n').split()
+                                        string_entrez[line[2].replace('9606.','')] = line[1]
+          human_entrez_string()
+
           entrez_name = {}
           for line in open(network_path+'HGNC_3-20-18.txt').readlines():
                     if 'Symbol' not in line:
@@ -18,6 +27,7 @@ def getSTRINGv10(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
                                         entrez_name[line[1]] = line[0]
                               except:
                                         pass
+          
           mapping_fl = network_path+'all_go_knowledge_explicit.tsv'
           id_name = {}
           for line in open(mapping_fl).readlines():
@@ -34,12 +44,24 @@ def getSTRINGv10(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
           id_name['ENSP00000322898'] = 'EBF1'
           id_name['ENSP00000349437'] = 'IGF2R'
           id_name['ENSP00000483018'] = 'ABO'
+          def human_name_string (fl = network_path + 'human.name_2_string.tsv'):
+                    for line in open(fl).readlines():
+                              if '#' not in line:
+                                   line = line.strip('\n').split()
+                                   id_name[line[2].replace('9606.', '')] = line[1]
+          human_name_string()
+          def protein_info (fl = network_path + '9606.protein.info.v11.0.txt'):
+                    for line in open(fl).readlines():
+                              if 'preferred_name' not in line:
+                                   line = line.strip('\n').split()
+                                   id_name[line[0].replace('9606.', '')] = line[1]
+          protein_info()
           # Parsing STRING network
-          net_name = 'STRING10_combined'
-          net_fl = network_path+'9606.protein.links.detailed.v10.txt'
+          net_name = 'STRING11_combined'
+          net_fl = network_path+'9606.protein.links.detailed.v11.0.txt'
           net_lst, unmapped, mapped = [], [], []
           for line in open(net_fl).readlines():
-                    if '#' not in line:
+                    if 'combined_score' not in line:
                               line = line.strip('\n').split()
                               sums = float(line[9])
                               try:
@@ -69,3 +91,4 @@ def getSTRINGv10(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
           print("{} nodes in the network are mapped to genes, {} are not mapped".format(len(mapped), len(unmapped)))
           out.close()
 
+getSTRINGv11()

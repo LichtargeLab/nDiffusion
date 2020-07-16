@@ -51,7 +51,7 @@ def getDegree (pred_node, node_degree):
     pred_degree_count = dict(Counter(pred_degree))
     return pred_degree_count
 
-def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree):
+def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree, graph_gene=[]):
     ### Parsing input files
     group1 = readInput(fl1)
     group2 = readInput(fl2)
@@ -64,7 +64,10 @@ def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree):
     group1_node = list(set(group1).intersection(graph_node))
     group2_node = list(set(group2).intersection(graph_node))
     overlap_node = list(set(overlap).intersection(graph_node))
-    other = list(set(graph_node) - set(group1_node) - set(group2_node))
+    if graph_gene == []:
+        other = list(set(graph_node) - set(group1_node) - set(group2_node))
+    else:
+        other = graph_gene
     group1_only_node = list(set(group1_node)-set(overlap_node))
     group2_only_node = list(set(group2_node)-set(overlap_node))
     print("{} genes are mapped (out of {}) in {}\n {} genes are mapped (out of {}) in {}\n {} are overlapped and mapped (out of {})\n".format(len(group1_node), len(group1), fl1_name, len(group2_node), len(group2), fl2_name, len(overlap_node), len(overlap)))

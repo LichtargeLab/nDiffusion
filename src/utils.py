@@ -57,22 +57,39 @@ def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', 
 
 ### Plotting distribution of experimental and random diffusion values
 def plotDist (exp_dist, randFRd, randTOd, randFRu, randTOu, result_fl, name, from_gp_name, to_gp_name, raw_input = True):
-    sns.kdeplot(np.log10(exp_dist) , color="red", label="Experiment", shade = True)
-    sns.kdeplot(np.log10(randFRd) , color="darkgreen", label="Randomize "+from_gp_name+" (degree-matched)", shade= True)
-    sns.kdeplot(np.log10(randTOd) , color="darkblue", label="Randomize "+to_gp_name+" (degree-matched)", shade = True)
-    sns.kdeplot(np.log10(randFRu) , color="lightgreen", label="Randomize "+from_gp_name+" (uniform)", shade= True)
-    sns.kdeplot(np.log10(randTOu) , color="lightskyblue", label="Randomize "+to_gp_name+" (uniform)", shade = True)
+    exp_dist = np.array(exp_dist)
+    randFRd = np.array(randFRd)
+    randTOd = np.array(randTOd)
+    randFRu = np.array(randFRu)
+    randTOu = np.array(randTOu)
+    exp_dist_log10 = np.log10(exp_dist, where=(exp_dist!=0))
+    randFRd_log10 = np.log10(randFRd, where=(randFRd!=0))
+    randTOd_log10 = np.log10(randTOd, where=(randTOd!=0))
+    randFRu_log10 = np.log10(randFRu, where=(randFRu!=0))
+    randTOu_log10 = np.log10(randTOu, where=(randTOu!=0))
+    # for diffusion value = 0, assign it with the smallest diffusion value observed
+    exp_dist_log10[exp_dist_log10==0] = np.min(exp_dist_log10) 
+    randFRd_log10[randFRd_log10==0] = np.min(randFRd_log10)
+    randTOd_log10[randTOd_log10==0] = np.min(randTOd_log10) 
+    randFRu_log10[randFRu_log10==0] = np.min(randFRu_log10) 
+    randTOu_log10[randTOu_log10==0] = np.min(randTOu_log10)
+
+    sns.kdeplot(exp_dist_log10 , color="red", label="Experiment", shade = True)
+    sns.kdeplot(randFRd_log10 , color="darkgreen", label="Randomize "+from_gp_name+" (degree-matched)", shade= True)
+    sns.kdeplot(randTOd_log10 , color="darkblue", label="Randomize "+to_gp_name+" (degree-matched)", shade = True)
+    sns.kdeplot(randFRu_log10 , color="lightgreen", label="Randomize "+from_gp_name+" (uniform)", shade= True)
+    sns.kdeplot(randTOu_log10 , color="lightskyblue", label="Randomize "+to_gp_name+" (uniform)", shade = True)
     plt.legend(loc = "upper left")
     plt.xlabel("log10 (diffusion value)")
     plt.ylabel("Density")
     plt.savefig(result_fl+"figures/"+name)
     plt.close()
     if raw_input == True:
-        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Experiment"), "wb"), np.log10(exp_dist))
-        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (degree-matched)"), "wb"), np.log10(randFRd))
-        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (degree-matched)"), "wb"), np.log10(randTOd))
-        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (uniform)"), "wb"), np.log10(randFRu))
-        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (uniform)"), "wb"), np.log10(randTOu))
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Experiment"), "wb"), exp_dist_log10)
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (degree-matched)"), "wb"), randFRd_log10)
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (degree-matched)"), "wb"), randTOd_log10)
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+from_gp_name+" (uniform)"), "wb"), randFRu_log10)
+        np.save(open("{}.npy".format(result_fl+"raw_data/"+name+"_Randomize "+to_gp_name+" (uniform)"), "wb"), randTOu_log10)
         
 ### Computing z-scores of experimental AUC against random AUCs
 def z_scores(exp, randf_degree, randt_degree, randf_uniform, randt_uniform):
