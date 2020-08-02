@@ -7,52 +7,63 @@ import scipy.stats as stats
 import seaborn as sns
 
 ### Plotting AUROC and AUPRC
-def plot_performance(x_axis, y_axis, auc_, result_fl, name, type='ROC', plotting= True):
+def plot_performance(x_axis, y_axis, auc_, result_fl, name, type='ROC', plotting= True, display = False):
     if type == 'ROC':
           x_axis_name, y_axis_name = 'FPR', 'TPR'
     elif type == 'PRC':
           x_axis_name, y_axis_name = 'Recall', 'Precision' 
     if plotting == True: 
           header = '%20s\t%30s'%(y_axis_name,x_axis_name)
-          np.savetxt(result_fl+'raw_data/'+name+type, np.column_stack((y_axis,x_axis)), delimiter ='\t',  header = header, comments='')
           plt.figure()
           lw = 2
           plt.plot(x_axis, y_axis, color='darkorange', lw=lw, label='AU'+type+' = %0.2f' % auc_)
           plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
           plt.xlim([0.0, 1.0])
           plt.ylim([0.0, 1.0])
-          plt.xlabel(x_axis_name, fontsize='x-large')
-          plt.ylabel(y_axis_name, fontsize='x-large')
+          plt.xlabel(x_axis_name, fontsize='x-large', color = 'white')
+          plt.ylabel(y_axis_name, fontsize='x-large', color = 'white')
           plt.legend(loc='lower right',fontsize='xx-large')
           plt.xticks(fontsize='large')
           plt.yticks(fontsize='large')
+          plt.tick_params(axis='x', colors='white')
+          plt.tick_params(axis='y', colors='white')
           plt.tight_layout()
-          plt.savefig('{}'.format(result_fl+'figures/'+ name+' '+type))
+          if display == True:
+              plt.show()
+          else:
+              plt.savefig('{}'.format(result_fl+'figures/'+ name+' '+type))
+              np.savetxt(result_fl+'raw_data/'+name+type, np.column_stack((y_axis,x_axis)), delimiter ='\t',  header = header, comments='')
           plt.close()
 
 ### Plotting distribution of random AUCs
-def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', raw_input = True):
+def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', raw_input = True, display = False):
     if type == 'density':
           sns.kdeplot(np.array(roc_rands) , color="gray", shade = True)
-          plt.legend(loc = 'upper left')
-          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,10),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')          
+          bottom, top = plt.ylim()
+          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.9*top),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')          
           plt.xlim([0,1])
-          plt.xlabel("Random AUCs", fontsize='x-large')
-          plt.ylabel("Density", fontsize='x-large')
+          plt.xlabel("Random AUCs", fontsize='x-large', color = 'white')
+          plt.ylabel("Density", fontsize='x-large', color = 'white')
           plt.xticks(fontsize='large')
           plt.yticks(fontsize='large')
+          plt.tick_params(axis='x', colors='white')
+          plt.tick_params(axis='y', colors='white')
     elif type == 'hist':
           plt.hist(roc_rands, color = 'gray', bins = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
-          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,10),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')
+          bottom, top = plt.ylim()
+          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.9*top),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')
           plt.xlim([0.0, 1.0])
           plt.xlabel('Random AUCs', fontsize='x-large')
           plt.ylabel('Count', fontsize='x-large')
           plt.xticks(fontsize='large')
           plt.yticks(fontsize='large')
     plt.tight_layout()
-    plt.savefig(result_fl+'figures/'+name)
+    if display == True:
+        plt.show()
+    else:
+        plt.savefig(result_fl+'figures/'+name)
     plt.close()
-    if raw_input == True:
+    if raw_input == True and display == False:
         np.save(open("{}.npy".format(result_fl+"raw_data/"+name), "wb"), np.array(roc_rands))
 
 ### Plotting distribution of experimental and random diffusion values
