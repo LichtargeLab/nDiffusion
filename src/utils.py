@@ -40,7 +40,7 @@ def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', 
     if type == 'density':
           sns.kdeplot(np.array(roc_rands) , color="gray", shade = True)
           bottom, top = plt.ylim()
-          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.9*top),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')          
+          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.85*top),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')          
           plt.xlim([0,1])
           plt.xlabel("Random AUCs", fontsize='x-large', color = 'white')
           plt.ylabel("Density", fontsize='x-large', color = 'white')
