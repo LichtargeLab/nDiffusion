@@ -78,7 +78,7 @@ def getRand_uniform(pred_degree_count, other):
     rand_node = random.sample(other, number_rand)
     return rand_node
 
-### Performing degree-matched randomization
+### Performing randomization
 def runRand(node_degree_count, node_index, degree_nodes, other, graph_node_index, graph_node, ps, rand_type, node_type, diffuseMatrix=False, repeat=100):
     AUROCs, AUPRCs, scoreTPs = [], [], []
     if rand_type == 'uniform':
