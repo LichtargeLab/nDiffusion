@@ -118,7 +118,7 @@ def writeRanking(genes, score, classify, result_fl, group1_name, group2_name):
 
 ### For a given diffusion experiment: computing experimental and random values
 ##  from_dict is for the group where diffusion signals start and to_dict is for the true positive group 
-def runrun(from_dict, to_dict, result_fl, group1_name, group2_name, show, degree_nodes, other, graph_node_index, graph_node, ps, exclude = []):
+def runrun(from_dict, to_dict, result_fl, group1_name, group2_name, show, degree_nodes, other, graph_node_index, graph_node, ps, exclude = [], repeat = 100):
     name = 'from {} to {}'.format(group1_name, group2_name)
     ### experimental results  
     results = performance_run(from_dict['index'], to_dict['index'], graph_node, ps, exclude = exclude)
@@ -128,15 +128,15 @@ def runrun(from_dict, to_dict, result_fl, group1_name, group2_name, show, degree
     
     ### Degree-matched randomization
     #### Randomizing nodes where diffusion starts
-    AUROCs_from_degree, AUPRCs_from_degree, scoreTPs_from_degree = runRand(from_dict['degree'], to_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='degree', node_type='FROM')
+    AUROCs_from_degree, AUPRCs_from_degree, scoreTPs_from_degree = runRand(from_dict['degree'], to_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='degree', node_type='FROM', repeat = repeat)
     #### Randomizing nodes which are true positive
-    AUROCs_to_degree, AUPRCs_to_degree, scoreTPs_to_degree = runRand(to_dict['degree'], from_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='degree', node_type='TO', diffuseMatrix=results['diffuseMatrix'])
+    AUROCs_to_degree, AUPRCs_to_degree, scoreTPs_to_degree = runRand(to_dict['degree'], from_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='degree', node_type='TO', diffuseMatrix=results['diffuseMatrix'], repeat=repeat)
     
     ### Uniform randomization
     #### Randomizing nodes where diffusion starts
-    AUROCs_from_uniform, AUPRCs_from_uniform, scoreTPs_from_uniform = runRand(from_dict['degree'], to_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='uniform', node_type='FROM')
+    AUROCs_from_uniform, AUPRCs_from_uniform, scoreTPs_from_uniform = runRand(from_dict['degree'], to_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='uniform', node_type='FROM', repeat=100)
     #### Randomizing nodes which are true positive
-    AUROCs_to_uniform, AUPRCs_to_uniform, scoreTPs_to_uniform = runRand(to_dict['degree'], from_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='uniform', node_type='TO', diffuseMatrix=results['diffuseMatrix'])
+    AUROCs_to_uniform, AUPRCs_to_uniform, scoreTPs_to_uniform = runRand(to_dict['degree'], from_dict['index'], degree_nodes, other, graph_node_index, graph_node, ps, rand_type='uniform', node_type='TO', diffuseMatrix=results['diffuseMatrix'], repeat=100)
     
     ### Computing z-scores when comparing AUROC and AUPRC against random
     #### z-scores: from_degree, to_degree, from_uniform, to_uniform

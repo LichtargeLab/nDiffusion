@@ -12,6 +12,7 @@ geneList2_fl = '../data/genes/B.tsv'
 result_fl = '../results/'
 group1_name = geneList1_fl.split('/')[-1].split('.')[0]
 group2_name = geneList2_fl.split('/')[-1].split('.')[0]
+repeat = 200
 
 ### For a multimodal network, specify graph genes
 graph_gene = []
@@ -52,7 +53,7 @@ if __name__ == "__main__":
    
     ### Diffusion experiments
     def getResults(gp1, gp2, result_fl, gp1_name, gp2_name, show = '', exclude=[]):
-        auroc, z_auc, auprc, z_prc, pval = runrun(gp1, gp2, result_fl, gp1_name, gp2_name, show, degree_nodes, other_dict['node'], graph_node_index, graph_node, ps, exclude=exclude)
+        auroc, z_auc, auprc, z_prc, pval = runrun(gp1, gp2, result_fl, gp1_name, gp2_name, show, degree_nodes, other_dict['node'], graph_node_index, graph_node, ps, exclude=exclude, repeat = repeat)
         return auroc, z_auc, auprc, z_prc, pval
     
     #### auroc, z-scores for auc, auprc, z-scores for auprc, KS pvals
