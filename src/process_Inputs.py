@@ -53,8 +53,8 @@ def getDegree (pred_node, node_degree):
 
 def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree, graph_gene=[]):
     ### Parsing input files
-    group1 = readInput(fl1)
-    group2 = readInput(fl2)
+    group1 = set(readInput(fl1))
+    group2 = set(readInput(fl2))
     fl1_name = fl1.split('/')[-1].split('.')[0]
     fl2_name = fl2.split('/')[-1].split('.')[0]
     overlap = list(set(group1).intersection(group2))

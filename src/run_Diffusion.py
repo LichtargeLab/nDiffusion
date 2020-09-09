@@ -12,7 +12,7 @@ geneList2_fl = '../data/genes/B.tsv'
 result_fl = '../results/'
 group1_name = geneList1_fl.split('/')[-1].split('.')[0]
 group2_name = geneList2_fl.split('/')[-1].split('.')[0]
-repeat = 200
+repeat = 100 #number of randomization iterations
 
 ### For a multimodal network, specify graph genes
 graph_gene = []
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     #### auroc, z-scores for auc, auprc, z-scores for auprc, KS pvals
     #### z-scores: from_degree, to_degree, from_uniform, to_uniform
 
-    if overlap_dict['node'] != []:
+    if overlap_dict['node'] != [] and GP1_only_dict['node'] != [] and GP2_only_dict['node'] != []: 
         # From group 1 exclusive to group 2 all:
         R_gp1o_gp2 = getResults(GP1_only_dict, GP2_all_dict, result_fl, group1_name+'Excl', group2_name, show = '__SHOW_1_')
         # From group 2 exclusive to group 1 all:
@@ -74,15 +74,25 @@ if __name__ == "__main__":
         R_gp2o_overlap = getResults(GP2_only_dict, overlap_dict, result_fl, group2_name+'Excl', 'Overlap')
         # From overlap to (group 1 exclusive and group 2 exlusive)
         R_overlap_exclusives = getResults(overlap_dict, Exclusives_dict, result_fl,'Overlap', 'Exclus')
-
         ### Write output
         writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2, R_gp2o_gp1, R_gp1o_gp2o, R_gp2o_gp1o, R_gp1o_overlap, R_gp2o_overlap, R_overlap_exclusives)
+    elif overlap_dict['node'] != [] and GP2_only_dict['node'] == []: #when group 2 is entirely part of group 1
+        # From group 1 exclusive to overlap/group 2
+        R_gp1o_overlap = getResults(GP1_only_dict, overlap_dict, result_fl, group1_name+'Excl', 'Overlap or'+group2_name)
+        # From overlap/group 2 to group 1 exclusive
+        R_overlap_gp1o = getResults(overlap_dict, GP1_only_dict, result_fl,'Overlap or'+group2_name, group1_name+'Excl')
+        writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_overlap=R_gp1o_overlap, R_overlap_gp1o=R_overlap_gp1o)
+    elif overlap_dict['node'] != [] and GP1_only_dict['node'] == []: #when group 1 is entirely part of group 2
+        # From group 2 exclusive to overlap/group 1
+        R_gp2o_overlap = getResults(GP2_only_dict, overlap_dict, result_fl, group2_name+'Excl', 'Overlap or '+group1_name)
+        # From overlap/group 1 to group 2 exclusive
+        R_overlap_gp2o = getResults(overlap_dict, GP2_only_dict, result_fl,'Overlap or'+group1_name, group2_name+'Excl')
+        writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp2o_overlap=R_gp2o_overlap, R_overlap_gp2o=R_overlap_gp2o)
     else: #when there is no overlap between two groups
         # From group 1 to group 2:
         R_gp1o_gp2o = getResults(GP1_only_dict, GP2_only_dict, result_fl, group1_name, group2_name, show = 'SHOW1')
         # From group 2 to group 1:
         R_gp2o_gp1o = getResults(GP2_only_dict, GP1_only_dict, result_fl, group2_name, group1_name, show = 'SHOW2')
-        
         ### Write output
         writeSumTxt (result_fl, group1_name, group2_name, GP1_only_dict, GP2_only_dict, overlap_dict, R_gp1o_gp2o=R_gp1o_gp2o, R_gp2o_gp1o=R_gp2o_gp1o)
 
