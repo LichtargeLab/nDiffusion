@@ -5,6 +5,7 @@ import numpy as np
 from scipy.sparse import lil_matrix, csr_matrix, coo_matrix, csgraph, identity
 from collections import Counter
 import random
+from mapping import *
 
 def getGraph (net_lst = '../data/networks/STRINGv10.txt'):
     G = nx.read_edgelist(open(net_lst, 'r'), data=(('weight',float),))
@@ -64,6 +65,37 @@ def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree, graph_g
     group1_node = list(set(group1).intersection(graph_node))
     group2_node = list(set(group2).intersection(graph_node))
     overlap_node = list(set(overlap).intersection(graph_node))
+
+    gene_transform = {}
+    gp1_only_map, gp2_only_map, overlap_map = [], [], []
+    if (len(group1_node)<len(group1)) or (len(group2_node) < len(group2)):
+        mapping_dict = mapping()
+        if (len(overlap_node)<len(overlap)):
+            overlap_unmap = set(overlap).difference(overlap_node)
+            for i in overlap_unmap:
+                try:
+                    overlap_node.append(mapping_dict[i][0])
+                    gene_transform[i] = '{}->{}'.format(i, mapping_dict[i][0])
+                    overlap_map.append('{}->{}'.format(i, mapping_dict[i][0]))
+                except:
+                    pass
+        if (len(group1_node)<len(group1)):
+            group1_unmap = set(group1).difference(group1_node)
+            for i in group1_unmap:
+                try:
+                    group1_node.append(mapping_dict[i][0])
+                    gene_transform[i] = '{}->{}'.format(i, mapping_dict[i][0])
+                except:
+                    pass
+        if (len(group2_node)<len(group2)):
+            group2_unmap = set(group2).difference(group2_node)
+            for i in group2_unmap:
+                try:
+                    group2_node.append(mapping_dict[i][0])
+                    gene_transform[i] = '{}->{}'.format(i, mapping_dict[i][0])
+                except:
+                    pass
+          
     if graph_gene == []:
         other = list(set(graph_node) - set(group1_node) - set(group2_node))
     else:
@@ -81,9 +113,9 @@ def parseGeneInput (fl1, fl2, graph_node, graph_node_index, node_degree, graph_g
     group2_only_degree_count = getDegree(group2_only_node, node_degree)
     overlap_degree_count = getDegree(overlap_node, node_degree)
     ### Combining these features into dictionaries
-    GP1_only_dict={'orig': group1_only, 'node':group1_only_node, 'index':group1_only_index, 'degree': group1_only_degree_count}
-    GP2_only_dict={'orig': group2_only,'node':group2_only_node, 'index':group2_only_index, 'degree': group2_only_degree_count}
-    overlap_dict={'orig': overlap, 'node':overlap_node, 'index':overlap_index, 'degree': overlap_degree_count}
+    GP1_only_dict={'orig': group1_only, 'node':group1_only_node, 'index':group1_only_index, 'degree': group1_only_degree_count, 'map':gp1_only_map}
+    GP2_only_dict={'orig': group2_only,'node':group2_only_node, 'index':group2_only_index, 'degree': group2_only_degree_count, 'map':gp2_only_map}
+    overlap_dict={'orig': overlap, 'node':overlap_node, 'index':overlap_index, 'degree': overlap_degree_count, 'map':overlap_map}
     other_dict={'node':other, 'index':other_index} 
     
     return GP1_only_dict, GP2_only_dict, overlap_dict, other_dict 

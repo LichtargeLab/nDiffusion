@@ -1,8 +1,8 @@
 from IPython import embed
 
-def getSTRINGv11(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRING10/', outfile = '../data/networks/STRINGv11.txt'):
+def getSTRINGv11(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRING10/', outfile = '../data/networks/STRINGv11_new.txt'):
           out = open(outfile, 'w')
-          
+          '''
           string_entrez = {}
           def entrezString(fl):
                     for line in open(fl).readlines():
@@ -29,7 +29,9 @@ def getSTRINGv11(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
                                         pass
           
           mapping_fl = network_path+'all_go_knowledge_explicit.tsv'
+          '''
           id_name = {}
+          '''
           for line in open(mapping_fl).readlines():
                     line = line.strip('\n').split()
                     id_name[line[1]] = line[2]
@@ -50,6 +52,7 @@ def getSTRINGv11(network_path = '/Users/minhpham/Desktop/Projects/Databases/STRI
                                    line = line.strip('\n').split()
                                    id_name[line[2].replace('9606.', '')] = line[1]
           human_name_string()
+          '''
           def protein_info (fl = network_path + '9606.protein.info.v11.0.txt'):
                     for line in open(fl).readlines():
                               if 'preferred_name' not in line:
