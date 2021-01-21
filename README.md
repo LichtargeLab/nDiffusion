@@ -6,7 +6,7 @@ Repository for [*nDiffusion*](https://ndiffusion.lichtargelab.org)
 # Publication 
 [*Pham M, Lichtarge O. Graph-based information diffusion method for prioritizing functionally related genes in protein-protein interaction networks. Pac Symp Biocomput. 2020;25:439-450*](https://www.worldscientific.com/doi/10.1142/9789811215636_0039)
 
-[*Pham M, Govindarajan H, Lichtarge O. nDiffusion: a network diffusion application to evaluate gene functionality (submitted)*]
+Pham M, Govindarajan H, Lichtarge O. nDiffusion: a network diffusion application to evaluate gene functionality (submitted)
 
 If you have any questions or comments, feel free to contact Minh Pham (minh.pham@bcm.edu), Harikumar Govindarajan (Harikumar.Govindarajan@bcm.edu), or Olivier Lichtarge (lichtarge@bcm.edu).
 
