@@ -20,9 +20,9 @@ If you have any questions or comments, feel free to contact Minh Pham (minh.pham
  - [Run tutorial](#run-tutorial)
 
 --------
-## Download code   - (will be changed later)
+## Download code
 ```bash
-git clone https://github.com/mpham93/nDiffusion.git 
+git clone https://github.com/LichtargeLab/nDiffusion.git 
 ```
 
 --------
