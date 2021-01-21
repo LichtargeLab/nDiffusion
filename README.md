@@ -1,6 +1,6 @@
 # Network Diffusion (nDiffusion) to Validate Gene Connectedness
 
-Repository for [*nDiffusion*](https://ndiffusion.lichtargelab.org)
+Repository for [*nDiffusion website*](https://ndiffusion.lichtargelab.org) 
 
 
 # Publications 
