@@ -35,7 +35,7 @@ def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', 
     if type == 'density':
           sns.kdeplot(np.array(roc_rands) , color="gray", shade = True)
           bottom, top = plt.ylim()
-          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.85*top),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')          
+          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,0.85*top),color = 'orangered',fontsize = 'x-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='right')          
           plt.xlim([0,1])
           plt.xlabel("Random AUCs", fontsize='x-large')
           plt.ylabel("Density", fontsize='x-large')
@@ -43,7 +43,7 @@ def plotAUCrand (roc_exp, roc_rands, z_text, result_fl, name, type = 'density', 
           plt.yticks(fontsize='large')
     elif type == 'hist':
           plt.hist(roc_rands, color = 'gray', bins = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])
-          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,10),color = 'orangered',fontsize = 'xx-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='center')
+          plt.annotate('AUC = %0.2f\nz = {}'.format(z_text) %roc_exp, xy = (roc_exp, 0), xytext = (roc_exp,10),color = 'orangered',fontsize = 'x-large', arrowprops = dict(color = 'orangered',width = 2, shrink=0.05),va='center',ha='right')
           plt.xlim([0.0, 1.0])
           plt.xlabel('Random AUCs', fontsize='x-large')
           plt.ylabel('Count', fontsize='x-large')
